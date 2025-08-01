@@ -8,6 +8,7 @@ export default function DonutChart({
   height = "400px",
   showTotal = true,
   showLegend = true,
+  legend,
 }) {
   // Validasi data
   const isValidData = useMemo(() => {
@@ -70,10 +71,15 @@ export default function DonutChart({
     },
     ...(showLegend && {
       legend: {
-        bottom: 10,
+        orient: "horizontal",
+        type: "scroll",
+        top: "bottom",
         left: "center",
-        type: "scroll", // Untuk handling banyak item
-        pageButtonItemGap: 5,
+        itemWidth: 14,
+        itemHeight: 14,
+        textStyle: {
+          fontSize: 12,
+        },
         formatter: (name) => {
           const item = seriesData.find((p) => p.name === name);
           if (!item || total === 0) return name;
@@ -82,6 +88,7 @@ export default function DonutChart({
           );
           return `${name} (${percentage}%)`;
         },
+        ...legend,
       },
     }),
     series: [

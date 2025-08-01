@@ -10,8 +10,10 @@ export default function BarChart({
   seriesData,
   onTitleClick,
   width = "100%",
-  height = "400",
+  height = "400px",
+  grid,
 }) {
+  // rumus auto rotate xAxis
   const calculateRotation = useMemo(() => {
     if (typeof xAxisRotate === "number") {
       return xAxisRotate; // Jika sudah ditentukan angka, gunakan itu
@@ -46,17 +48,17 @@ export default function BarChart({
     return 0; // Tidak perlu rotasi
   }, [xAxisData, width, xAxisRotate]);
 
-  const calculateInterval = useMemo(() => {
-    if (!xAxisData) return 0;
+  // const calculateInterval = useMemo(() => {
+  //   if (!xAxisData) return 0;
 
-    const labelCount = xAxisData.length;
+  //   const labelCount = xAxisData.length;
 
-    // Jika label terlalu banyak, tampilkan setiap n label
-    if (labelCount > 20) return Math.floor(labelCount / 20);
-    if (labelCount > 10) return Math.floor(labelCount / 10);
+  //   // Jika label terlalu banyak, tampilkan setiap n label
+  //   if (labelCount > 20) return Math.floor(labelCount / 20);
+  //   if (labelCount > 10) return Math.floor(labelCount / 10);
 
-    return 0; // Tampilkan semua label
-  }, [xAxisData]);
+  //   return 0; // Tampilkan semua label
+  // }, [xAxisData]);
 
   const getChartOptions = () => ({
     title: {
@@ -66,11 +68,12 @@ export default function BarChart({
     },
     tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
     grid: {
-      top: 75,
+      // top: 75,
       left: "3%",
       right: "4%",
-      bottom: calculateRotation > 0 ? "15%" : "10%", // Beri ruang lebih jika ada rotasi
+      bottom: "10%",
       containLabel: true,
+      ...grid,
     },
     xAxis: {
       type: "category",
@@ -79,7 +82,8 @@ export default function BarChart({
       nameLocation: "middle",
       nameGap: calculateRotation > 0 ? 50 : 30, // Sesuaikan jarak nama sumbu
       axisLabel: {
-        interval: calculateInterval,
+        // interval: calculateInterval,
+        interval: 0,
         rotate: calculateRotation,
         // Sesuaikan alignment berdasarkan rotasi
         verticalAlign: calculateRotation === 90 ? "middle" : "top",

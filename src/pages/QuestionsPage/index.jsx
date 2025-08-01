@@ -1,12 +1,21 @@
 import { API } from "axios/axios";
-import { useState as useStateList, useEffect as useEffectList } from "react";
+import ModalAddToDashboard from "components/organisms/ModalAddToDashboard";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function QuestionsListPage() {
-  const [questions, setQuestions] = useStateList([]);
-  const [isLoading, setIsLoading] = useStateList(true);
+  const [questions, setQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffectList(() => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+
+  const openAddToDashboardModal = (id) => {
+    setSelectedQuestionId(id);
+    setIsModalOpen(true);
+  };
+
+  useEffect(() => {
     const fetchQuestions = async () => {
       setIsLoading(true);
       try {
@@ -60,12 +69,23 @@ export default function QuestionsListPage() {
                 <p className="font-bold text-lg">{q.name}</p>
                 <p className="text-sm text-gray-500">Type: {q.chart_type}</p>
               </Link>
-              <button
-                onClick={() => handleDelete(q.id)}
-                className="text-red-500 hover:text-red-700 font-semibold"
-              >
-                Delete
-              </button>
+              <div className="space-x-4">
+                {/* Tombol Baru */}
+                <button
+                  onClick={() => openAddToDashboardModal(q.id)}
+                  className="text-blue-600 hover:text-blue-800 font-semibold"
+                >
+                  + Add to Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    /* handleDelete(q.id) */
+                  }}
+                  className="text-red-500 hover:text-red-700 font-semibold"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -75,6 +95,13 @@ export default function QuestionsListPage() {
           </p>
         )}
       </div>
+
+      {isModalOpen && (
+        <ModalAddToDashboard
+          questionId={selectedQuestionId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

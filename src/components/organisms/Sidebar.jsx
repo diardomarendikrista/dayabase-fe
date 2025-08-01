@@ -37,10 +37,10 @@ export default function Sidebar() {
           All Questions
         </NavLink>
         <NavLink
-          to="/dashboard"
+          to="/dashboards"
           className={getLinkClass}
         >
-          Dashboard
+          Dashboards
         </NavLink>
       </nav>
     </aside>

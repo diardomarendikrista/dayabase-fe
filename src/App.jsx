@@ -3,13 +3,13 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainLayout from "layouts/MainLayout";
 
 // Impor halaman-halaman baru Anda
-import QuestionEditorPage from "pages/QuestionEditorPage";
-import QuestionsListPage from "pages/QuestionsListPage";
+import QuestionEditorPage from "pages/QuestionsPage/QuestionsForm";
+import QuestionsListPage from "pages/QuestionsPage";
 import ConnectionsPage from "pages/ConnectionsPage";
 import MVP from "pages/MVP";
-import ConnectionFormPage from "pages/ConnectionsPage/ConnectionFormPage";
+import ConnectionFormPage from "pages/ConnectionsPage/ConnectionsForm";
 import DashboardPage from "pages/DashboardPage";
-// import DashboardPage from './pages/DashboardPage'; // Untuk nanti
+import DashboardViewPage from "pages/DashboardPage/DashboardView";
 
 function App() {
   return (
@@ -53,8 +53,12 @@ function App() {
             element={<ConnectionFormPage />}
           />
           <Route
-            path="/dashboard"
+            path="/dashboards"
             element={<DashboardPage />}
+          />
+          <Route
+            path="/dashboards/:id"
+            element={<DashboardViewPage />}
           />
         </Route>
       </Routes>

@@ -9,7 +9,6 @@ export default function LineChart({
   const options = {
     tooltip: { trigger: "axis" },
     legend: {
-      // <-- Legenda ditambahkan di sini
       data: ["Value"],
       top: 10,
     },
@@ -21,7 +20,9 @@ export default function LineChart({
       containLabel: true,
     }, // 'top' disesuaikan untuk memberi ruang pada legenda
     xAxis: { type: "category", boundaryGap: false, data: xAxisData },
-    yAxis: { type: "value" },
+    yAxis: {
+      type: "value",
+    },
     series: [
       {
         name: "Value",
